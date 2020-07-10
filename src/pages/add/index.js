@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { Card, Button, Container, Row, Col } from 'react-bootstrap';
 import { Link } from "react-router-dom";
+import { FiPower, FiTrash2, FiActivity, FiPlus } from 'react-icons/fi'
 
-import Header from '../../components/header'
 import './styles.css';
+import Header from '../../components/header'
 
 import api from '../../services/api'
 
-function Home() {
+function Add() {
   const [courses, setCourses] = useState([]);
 
   useEffect(() => {
@@ -19,7 +20,7 @@ function Home() {
 
   return (
     <Container>
-        <Header pageName='Bem vindo' btnText='Cadastrar curso' btnNav='add' />
+      <Header pageName='Cadastrar novo curso' btnText='Voltar' btnNav='/' />
       <Row className="justify-content-md-center">
         {
           courses.map(course => (
@@ -52,4 +53,4 @@ function Home() {
   )
 }
 
-export default Home;
+export default Add;
