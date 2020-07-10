@@ -27,20 +27,7 @@ function Home() {
               <Card.Body>
                 <Card.Title>{course.title}</Card.Title>
                 <Card.Text>
-                  {course.description}
-                </Card.Text>
-                <Button variant="primary">Go somewhere</Button>
-              </Card.Body>
-            </Card>
-          ))
-        }
-        {
-          courses.map(course => (
-            <Card style={{ width: '18rem', marginLeft: 10, marginRight: 10, marginBottom: 10 }}>
-              <Card.Body>
-                <Card.Title>{course.title}</Card.Title>
-                <Card.Text>
-                  {course.description}
+                  {course.subtitle}
                 </Card.Text>
                 <Button variant="primary">Ver detalhes</Button>
               </Card.Body>

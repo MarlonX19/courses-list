@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { Card, Button, Container, Row, Col } from 'react-bootstrap';
+import { Card, Button, Container, Row, Col, Form, FormLabel } from 'react-bootstrap';
 import { Link } from "react-router-dom";
-import { FiPower, FiTrash2, FiActivity, FiPlus } from 'react-icons/fi'
+import swal from 'sweetalert';
+import DateTimePicker from 'react-datetime-picker';
 
 import './styles.css';
 import Header from '../../components/header'
@@ -9,45 +10,87 @@ import Header from '../../components/header'
 import api from '../../services/api'
 
 function Add() {
-  const [courses, setCourses] = useState([]);
+  const [title, setTitle] = useState('');
+  const [subtitle, setSubtitle] = useState('');
+  const [desc, setDesc] = useState('');
+  const [startedAt, setStartedAt] = useState('');
+  const [isActive, setIsActive] = useState(true);
 
-  useEffect(() => {
-    api.get('/courses')
-      .then(response => setCourses(response.data))
-      .catch(error => console.log(error))
 
-  }, [])
+  function clearStates(){
+    setTitle('');
+    setSubtitle('');
+    setStartedAt('');
+    setDesc('')
+  }
+
+
+  function handleSend(e) {
+    e.preventDefault();
+
+    console.log(startedAt);
+
+    api.post('/courses', {
+      title,
+      subtitle,
+      startedAt,
+      description: desc,
+    })
+      .then(response => {
+        console.log(response.data);
+        clearStates();
+        swal({
+          title: "Successo!",
+          text: "novo curso cadastrado!",
+          icon: "success",
+        });
+      })
+      .catch(error => {
+        console.log(error.response);
+        swal({
+          title: "Oops!",
+          text: "Erro ao tentar cadastrar curso!",
+          icon: "error",
+        });
+      })
+
+  }
+
+
 
   return (
     <Container>
-      <Header pageName='Cadastrar novo curso' btnText='Voltar' btnNav='/' />
+      <Header pageName='Cadastrar novo curso' btnText='Voltar' btnNav='/' iconName='back' />
       <Row className="justify-content-md-center">
-        {
-          courses.map(course => (
-            <Card style={{ width: '18rem', marginLeft: 10, marginRight: 10, marginBottom: 10 }}>
-              <Card.Body>
-                <Card.Title>{course.title}</Card.Title>
-                <Card.Text>
-                  {course.description}
-                </Card.Text>
-                <Button variant="primary">Go somewhere</Button>
-              </Card.Body>
-            </Card>
-          ))
-        }
-        {
-          courses.map(course => (
-            <Card style={{ width: '18rem', marginLeft: 10, marginRight: 10, marginBottom: 10 }}>
-              <Card.Body>
-                <Card.Title>{course.title}</Card.Title>
-                <Card.Text>
-                  {course.description}
-                </Card.Text>
-                <Button variant="primary">Ver detalhes</Button>
-              </Card.Body>
-            </Card>
-          ))
-        }
+        <div className='form-container'>
+          <Form>
+            <Row className='row'>
+              <Col>
+                <FormLabel>Título</FormLabel>
+                <Form.Control value={title} onChange={e => setTitle(e.target.value)} placeholder="ex: Curso de Python" required />
+              </Col>
+              <Col>
+                <FormLabel>Subtítulo</FormLabel>
+                <Form.Control value={subtitle} onChange={e => setSubtitle(e.target.value)} placeholder="ex: aprenda Python de maneira fácil" required />
+              </Col>
+            </Row>
+            <Row className='row'>
+              <Col>
+                <FormLabel>Data de início</FormLabel>
+                <Form.Control type="datetime-local" value={startedAt} onChange={e => setStartedAt(e.target.value)} />
+              </Col>
+            </Row>
+            <Row className='row'>
+              <Col>
+                <FormLabel>Descrição do curso</FormLabel>
+                <Form.Control as="textarea" rows="3" value={desc} onChange={e => setDesc(e.target.value)} placeholder="ex: o curso lhe ensinará a maneira correta de desenvolver usando Python!" required />
+              </Col>
+            </Row>
+          </Form>
+          <Button onClick={handleSend} variant="primary" type="submit">
+            Cadastrar
+          </Button>
+        </div>
       </Row>
     </Container>
   )

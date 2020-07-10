@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from "react-router-dom";
-import { FiPlus } from 'react-icons/fi'
+import { FiPlus, FiArrowLeft } from 'react-icons/fi'
 
 import './styles.css';
 
@@ -12,7 +12,12 @@ function Header(props) {
       <header>
         <img src={logoImg} alt='Logo' />
         <span>{props.pageName}</span>
-        <Link className='button' to={`${props.btnNav}`} >  <FiPlus size={25} color='#fff' /> {props.btnText}</Link>
+        <Link
+          className='button'
+          to={`${props.btnNav}`}>
+          {props.iconName == 'back' ? <FiArrowLeft size={25} color='#fff' /> : <FiPlus size={25} color='#fff' />}
+          {props.btnText}
+        </Link>
       </header>
     </div>
   )
