@@ -19,13 +19,40 @@ function Home() {
 
   }, [])
 
+
+  function handleSearch(e) {
+    e.preventDefault();
+
+    api.get('/courses/find', {
+      params: {
+        q: search
+      }
+    })
+      .then(response => {
+        if (response.data.message) {
+          setCourses([]);
+        }
+
+        if (response.data.length > 0) {
+          setCourses(response.data);
+        }
+
+
+      })
+      .catch(error => console.log(error.response))
+  }
+
   return (
     <Container>
       <Header pageName='Bem vindo' btnText='Cadastrar curso' btnNav='add' />
       <Row className='row'>
         <Form className='search-container'>
-            <Form.Control value={search} onChange={e => setSearch(e.target.value)} placeholder="Pesquisar" required />
-          <button className='searchBtn'><FiSearch size={22} color='grey' /></button>
+          <Form.Control value={search} onChange={e => setSearch(e.target.value)} placeholder="Pesquisar" required />
+          <button
+            onClick={handleSearch}
+            className='searchBtn'>
+            <FiSearch size={22} color='grey' />
+          </button>
         </Form>
       </Row>
       <Row className="justify-content-md-center">
