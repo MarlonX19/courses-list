@@ -17,7 +17,7 @@ function Add() {
   const [isActive, setIsActive] = useState(true);
 
 
-  function clearStates(){
+  function clearStates() {
     setTitle('');
     setSubtitle('');
     setStartedAt('');
@@ -87,7 +87,7 @@ function Add() {
               </Col>
             </Row>
           </Form>
-          <Button onClick={handleSend} variant="primary" type="submit">
+          <Button as='button' onClick={handleSend} variant="primary">
             Cadastrar
           </Button>
         </div>
