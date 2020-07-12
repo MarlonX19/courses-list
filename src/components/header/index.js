@@ -10,7 +10,9 @@ function Header(props) {
   return (
     <div className="header-container">
       <header>
-        <img src={logoImg} alt='Logo' />
+        <Link to='/'>
+          <img src={logoImg} alt='Logo' />
+        </Link>
         <span>{props.pageName}</span>
         <Link
           className='button'
