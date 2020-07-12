@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Card, Button, Container, Row, Col, Form, FormLabel } from 'react-bootstrap';
-import { Link } from "react-router-dom";
 import swal from 'sweetalert';
-import DateTimePicker from 'react-datetime-picker';
 
 import './styles.css';
 import Header from '../../components/header'
@@ -14,7 +12,7 @@ function Add() {
   const [subtitle, setSubtitle] = useState('');
   const [desc, setDesc] = useState('');
   const [startedAt, setStartedAt] = useState('');
-  const [isActive, setIsActive] = useState(true);
+  const [isActive, setIsActive] = useState(false);
 
 
   function clearStates() {
@@ -33,6 +31,7 @@ function Add() {
     api.post('/courses', {
       title,
       subtitle,
+      isActive,
       startedAt,
       description: desc,
     })
@@ -84,6 +83,13 @@ function Add() {
               <Col>
                 <FormLabel>Descrição do curso</FormLabel>
                 <Form.Control as="textarea" rows="3" value={desc} onChange={e => setDesc(e.target.value)} placeholder="ex: o curso lhe ensinará a maneira correta de desenvolver usando Python!" required />
+              </Col>
+            </Row>
+            <Row>
+              <Col>
+                <input id='Check1' value={isActive} type="checkbox" onChange={() => setIsActive(!isActive)}/>
+                {"  "}
+                <label class="form-check-label" for="Check1">Ativo</label>
               </Col>
             </Row>
           </Form>
