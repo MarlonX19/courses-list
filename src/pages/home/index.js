@@ -63,7 +63,6 @@ function Home() {
   }
 
   function handleNavigation(course) {
-    console.log('aqui');
     console.log(course)
     history.push('/details', { courseId: course._id });
   }

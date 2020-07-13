@@ -26,8 +26,6 @@ function Add() {
   function handleSend(e) {
     e.preventDefault();
 
-    console.log(startedAt);
-
     api.post('/courses', {
       title,
       subtitle,
